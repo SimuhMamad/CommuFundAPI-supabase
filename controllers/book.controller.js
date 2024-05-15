@@ -55,6 +55,7 @@ const bookController = {
              // Ensure correct property name
           } catch (error) {
             console.error('Error fetching data from database:', error);
+            res.json({stat: 'failed'})
             res.status(500).send('Internal Server Error'); // Send appropriate error response
           }
         
