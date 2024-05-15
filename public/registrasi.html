@@ -77,13 +77,13 @@
             })
             .then(data => {
               if (data.stat === 'success') {
-                alert("Registration successfully");
+                alert("Registration successfully (Username sudah ditambahkan)");
                 // Handle successful login (e.g., redirect to another page)
                 
                 
               } else {
                 alert(data.error || 'Login failed');
-                alert("Registration failed");
+                alert("Registration failed (Username sudah ada)");
               }
             })
             .catch(error => {

@@ -38,10 +38,19 @@ const bookController = {
             const email = req.body.email;
         
             
-            const queri = `INSERT INTO users (username, password, nama, no_hp, email) VALUES ('${username}', '${password}', '${name}', '${number}', '${email}')`
+            const queri1 = `INSERT INTO users (username, password, nama, no_hp, email) VALUES ('${username}', '${password}', '${name}', '${number}', '${email}')`
             //console.log(queri)
-            const result = await postgre.query(queri);
+            const result1 = await postgre.query(queri1);
             //console.log(result)
+            const queri2 = `SELECT * FROM users where username = '${username}'`
+            const result2 = await postgre.query(queri2);
+            //console.log(result)
+            if (result2.rows == 0) {
+              res.json({ stat: 'failed' })
+            }
+            else{
+              res.json({ stat: 'success', token: '123456' });
+            }            
             res.send("Registrasi berhasil")
              // Ensure correct property name
           } catch (error) {
