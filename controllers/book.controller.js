@@ -38,7 +38,8 @@ const bookController = {
             const email = req.body.email;
         
             
-            const queri1 = `INSERT INTO users (username, password, nama, no_hp, email) VALUES ('${username}', '${password}', '${name}', '${number}', '${email}')`
+            const queri1 = `INSERT INTO users (username, password, nama, no_hp, email) VALUES 
+                            ('${username}', '${password}', '${name}', '${number}', '${email}')`
             //console.log(queri)
             const result1 = await postgre.query(queri1);
             //console.log(result)
@@ -63,19 +64,37 @@ const bookController = {
 
     insertOrganisasi: async(req, res) => {
       try {
-          const namaO = req.body.namaO
-          const deskripsiO = req.body.deskripsiO;
-          const nomorReg = req.body.nomorReg;
-          const tglPendirian = req.body.tglPendirian;
+          const namaResmiO = req.body.namaResmiO
+          const namaO = req.body.namaO;
+          const kategoriO = req.body.kategoriO;
+          const sektorO = req.body.sektorO;
           const alamatO = req.body.alamatO;
-          const stakeholderO = req.body.stakeholderO;
+          const provinsiO = req.body.provinsiO;
+          const kotaO = req.body.kotaO;
+
+          const nameNr = req.body.nameNr;
+          const emailNr = req.body.emailNr;
+          const passwordNr = req.body.passwordNr;
           
           
-          const queri = `INSERT INTO Detail_Organisasi (nama_organisasi, deskripsi_organisasi, nomor_registrasi, tanggal_pendirian, alamat_organisasi, stakeholder_organisasi) VALUES 
-                        ('${namaO}', '${deskripsiO}', '${nomorReg}', '${tglPendirian}', '${alamatO}', '${stakeholderO}')`
+          const queri = `INSERT INTO Detail_Organisasi (nama_resmi_organisasi, nama_organisasi, kategori_organisasi, sektor_organisasi, alamat_organisasi, provinsi_organisasi, kota_organisasi) VALUES 
+                        ('${namaResmiO}', '${namaO}', '${kategoriO}', '${sektorO}', '${alamatO}', '${provinsiO}', '${kotaO}')`
           //console.log(queri)
           const result = await postgre.query(queri);
           //console.log(result)
+          const queri2 = `INSERT INTO narahubung (nama_narahubung, email_narahubung, password) VALUES 
+                          ('${nameNr}', '${emailNr}', '${passwordNr}')`
+          const result2 = await postgre.query(queri2);
+          
+          const queri3 = `SELECT * FROM narahubung where email_narahubung = '${emailNr}'`
+          const result3 = await postgre.query(queri3);
+          //console.log(result)
+          if (result3.rows == 0) {
+            res.json({ stat: 'failed' })
+          }
+          else{
+            res.json({ stat: 'success', token: '123456' });
+          }
           res.send("Registrasi berhasil")
            // Ensure correct property name
         } catch (error) {
